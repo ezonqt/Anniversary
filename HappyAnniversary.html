@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Anniversary Memories</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #c156e4 0%, #bc96e1 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .photo-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .photo-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+
+        .photo-card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .photo-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .card-preview {
+            padding: 15px;
+            text-align: center;
+        }
+
+        .card-preview h3 {
+            color: #333;
+            margin-bottom: 5px;
+            font-size: 1.1rem;
+        }
+
+        .card-preview p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 1000;
+            padding: 20px;
+        }
+
+        .modal-content {
+            position: relative;
+            max-width: 700px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            top: 50%;
+            transform: translateY(-50%);
+            animation: modalAppear 0.3s ease;
+        }
+
+        @keyframes modalAppear {
+            from {
+                opacity: 0;
+                transform: translateY(-50%) scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(-50%) scale(1);
+            }
+        }
+
+        .modal img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+        }
+
+        .modal-text {
+            padding: 30px;
+            text-align: center;
+        }
+
+        .modal-text h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 2rem;
+        }
+
+        .modal-text p {
+            color: #555;
+            line-height: 1.6;
+            font-size: 1.1rem;
+        }
+
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 25px;
+            color: white;
+            font-size: 2rem;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 1001;
+            background: rgba(0,0,0,0.5);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s ease;
+        }
+
+        .close:hover {
+            background: rgba(0,0,0,0.8);
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .gallery {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .modal-content {
+                margin: 20px;
+                width: calc(100% - 40px);
+            }
+            
+            .modal img {
+                height: 250px;
+            }
+            
+            .modal-text {
+                padding: 20px;
+            }
+            
+            .modal-text h2 {
+                font-size: 1.5rem;
+            }
+        }
+
+        .footer {
+            text-align: center;
+            padding: 30px 10px;
+            color: white;
+            font-size: 1rem;
+            background: rgba(0, 0, 0, 0.2);
+            margin-top: 60px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .footer p {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Happy Anniversary!</h1>
+        <p>Cheers to another year of building memories, strengthening our bond, and creating a lifetime of love.</p>
+    </div>
+
+    <div class="gallery">
+        <div class="photo-card" onclick="openModal(1)">
+            <img src="/FirstDate.jpg" alt="First Date">
+            <div class="card-preview">
+                <h3>First Date</h3>
+                <p>hehehe nahanap ko na sya</p>
+            </div>
+        </div>
+
+        <div class="photo-card" onclick="openModal(2)">
+            <img src="/Festi.jpg" alt="Adventure Together">
+            <div class="card-preview">
+                <h3>Out of town date</h3>
+                <p>eme</p>
+            </div>
+        </div>
+
+        <div class="photo-card" onclick="openModal(3)">
+            <img src="/House.jpg" alt="Cozy Moments">
+            <div class="card-preview">
+                <h3>HEHEHE</h3>
+                <p></p>
+            </div>
+        </div>
+
+        <div class="photo-card" onclick="openModal(4)">
+            <img src="/SimpleCeleb.JPG" alt="Special Celebrations">
+            <div class="card-preview">
+                <h3>Special Celebrations</h3>
+                <p>Worth remembering</p>
+            </div>
+        </div>
+
+        <div class="photo-card" onclick="openModal(5)">
+            <img src="/Photobooths.jpg" alt="Photobooths">
+            <div class="card-preview">
+                <h3>Photobooths ofc!</h3>
+                <p>hehehe</p>
+            </div>
+        </div>
+
+        <div class="photo-card" onclick="openModal(6)">
+            <img src="/Future.jpg" alt="Future">
+            <div class="card-preview">
+                <h3>Our Future</h3>
+                <p>Dreams we're building together</p>
+            </div>
+        </div>
+
+        <div class="photo-card" onclick="openModal(7)">
+            <img src="/Ramen.jpg" alt="Ramen!">
+            <div class="card-preview">
+                <h3>More Ramen Dates</h3>
+                <p>pls pls pls</p>
+            </div>
+        </div>
+
+        <div class="photo-card" onclick="openModal(8)">
+            <img src="/Pageant.jpg" alt="Pageant">
+            <div class="card-preview">
+                <h3>Huwaw so pretty</h3>
+                <p>gunthe mo po</p>
+            </div>
+        </div>
+
+        <div class="photo-card" onclick="openModal(9)">
+            <img src="/Random.jpg" alt="Random">
+            <div class="card-preview">
+                <h3>Random</h3>
+                <p>wala lang</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <div id="modal1" class="modal">
+        <span class="close" onclick="closeModal(1)">&times;</span>
+        <div class="modal-content">
+            <img src="/FirstDate.jpg" alt="First Date">
+            <div class="modal-text">
+                <h2>Our First Date</h2>
+                <p>Finallyyy!!! Etoo lang picture na meron me sa first date natinnn huhu. But yeah, sobrang happy ko lang sa simple date natin na to. Usap usap lang about sa life. I love youuu!!</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal2" class="modal">
+        <span class="close" onclick="closeModal(2)">&times;</span>
+        <div class="modal-content">
+            <img src="/Festi.jpg" alt="Adventure Together">
+            <div class="modal-text">
+                <h2>Out of town date</h2>
+                <p>Nagsawa na sa kaka SM HAHAHAHHAHA. Napunta na sa festiiii. Tara na ulitt flzzz!</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal3" class="modal">
+        <span class="close" onclick="closeModal(3)">&times;</span>
+        <div class="modal-content">
+            <img src="/House.jpg" alt="Cozy Moments">
+            <div class="modal-text">
+                <h2>HEHEHE</h2>
+                <p>Eto ata yung unang punta ko sainyo na ako lang hehe. So kabado pa HAHAHAHAH. miss ko na dyan huhu</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal4" class="modal">
+        <span class="close" onclick="closeModal(4)">&times;</span>
+        <div class="modal-content">
+            <img src="/SimpleCeleb.JPG" alt="Special Celebrations">
+            <div class="modal-text">
+                <h2>Special Celebrations</h2>
+                <p>First Valentine's Date!!! So happy na nakapag date rin us ng Valentines. I luv uu!!! hehe balik tayo dito pls. miss ko na foods nila</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal5" class="modal">
+        <span class="close" onclick="closeModal(5)">&times;</span>
+        <div class="modal-content">
+            <img src="/Photobooths.jpg" alt="First Photobooth">
+            <div class="modal-text">
+                <h2>Photobooths ofc!</h2>
+                <p>Syempre di mawawala yung photobooths pics natin hehe. mwaa mwaa </p>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal6" class="modal">
+        <span class="close" onclick="closeModal(6)">&times;</span>
+        <div class="modal-content">
+            <img src="/Future.jpg" alt="Future Dreams">
+            <div class="modal-text">
+                <h2>Our Future</h2>
+                <p>I hope that our dreams will come true—our future, our plans, everything we’ve hoped for. Thank you for being my partner, my love, my everything. I’m so grateful to have you by my side. Here’s to our forever and always. ❤️</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal7" class="modal">
+        <span class="close" onclick="closeModal(7)">&times;</span>
+        <div class="modal-content">
+            <img src="/Ramen.jpg" alt="Ramen">
+            <div class="modal-text">
+                <h2>More Ramen Dates!</h2>
+                <p>Ramen na ulitt us hehehe</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal8" class="modal">
+        <span class="close" onclick="closeModal(8)">&times;</span>
+        <div class="modal-content">
+            <img src="/Pageant.jpg" alt="Pageant">
+            <div class="modal-text">
+                <h2>Huwaw so pretty</h2>
+                <p>Soaferr proud me sauuuu!!!</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal9" class="modal">
+        <span class="close" onclick="closeModal(9)">&times;</span>
+        <div class="modal-content">
+            <img src="/Random.jpg" alt="Random">
+            <div class="modal-text">
+                <h2>Random</h2>
+                <p>nilagay ko lang. cute kasi eh hehe. labyuu!!</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openModal(modalNum) {
+            document.getElementById('modal' + modalNum).style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(modalNum) {
+            document.getElementById('modal' + modalNum).style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal when clicking outside of it
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                const modals = document.querySelectorAll('.modal');
+                modals.forEach(modal => {
+                    if (modal.style.display === 'block') {
+                        modal.style.display = 'none';
+                        document.body.style.overflow = 'auto';
+                    }
+                });
+            }
+        });
+    </script>
+
+    <footer class="footer">
+        <p>More years to celebrate with you lovee!! I love you always, in all ways!</p>
+    </footer>
+</body>
+</html>
